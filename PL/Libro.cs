@@ -40,5 +40,23 @@ namespace PL
             }
 
         }
+        public static void Delete()
+        {
+            ML.Libro libro = new ML.Libro(); //Instancia
+
+            Console.WriteLine("Ingrese el Id del Libro a eliminar");
+            Console.WriteLine("Matricula");
+            libro.IdLibro = int.Parse(Console.ReadLine());
+
+
+            ML.Result result = BL.Libro.Delete(libro);//Se envia la informacion ingresada  
+
+            if (result.Correct)
+            {
+                Console.WriteLine("Mensaje: " + result.Message);
+                Console.ReadLine();
+            }
+
+        }
     }
 }

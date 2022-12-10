@@ -11,7 +11,7 @@ namespace BL
 {
     public class Libro
     {
-          public static ML.Result Add(ML.Libro libro)
+        public static ML.Result Add(ML.Libro libro)
             {
              ML.Result result = new ML.Result();
              try
@@ -72,6 +72,48 @@ namespace BL
                 }
                 return result;
 
-          } 
+          }
+        public static ML.Result Delete(ML.Libro libro)
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using (SqlConnection context = new SqlConnection(DL.Conexion.GetConexion()))
+                {
+                    string query = "DELETE FROM Libro WHERE IdLibro = @IdLibro";
+
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = context; //conexion
+                        cmd.CommandText = query; //query
+
+                        context.Open();
+
+                        SqlParameter[] collection = new SqlParameter[1];
+
+                        collection[0] = new SqlParameter("IdLibro", SqlDbType.Int);
+                        collection[0].Value = libro.IdLibro;
+
+                        cmd.Parameters.AddRange(collection);
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected >= 1)
+                        {
+                            result.Message = "Se elimino el libro correctamente";
+                        }
+
+                    }
+                }
+                result.Correct = true;
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.Ex = ex;
+                result.Message = "Ocurrio un error al eliminar el Usuario" + result.Ex;
+            }
+            return result;
+        }
     }
 }

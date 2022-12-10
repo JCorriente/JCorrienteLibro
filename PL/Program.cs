@@ -15,12 +15,15 @@ namespace PL
             {
                 Console.Clear();
                 Console.WriteLine("Elige una opcion: ");
-                Console.WriteLine("\n1.-Agregar un nuevo Libro: ");
+                Console.WriteLine("\n1.-Agregar un nuevo Libro: " + "\n2.-Eliminar libro");
                 opcion = Convert.ToInt32(Console.ReadLine());
                 switch (opcion)
                 {
                     case 1:
                         Libro.Add();
+                        break;
+                    case 2:
+                        Libro.Delete();
                         break;
                 }
                 Console.ReadKey();
